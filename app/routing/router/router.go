@@ -114,4 +114,7 @@ func registerPublicRoutes(router *gin.RouterGroup) {
 	router.POST("about", controllers.AboutController.CreateAbout)
 	router.GET("about/:user_id", controllers.AboutController.GetAbout)
 	router.PUT("about/:user_id", controllers.AboutController.UpdateAbout)
+
+	router.POST("profile/:profile_id/follow", controllers.FollowerController.Follow)
+	router.GET("profile/:profile_id/followers", controllers.FollowerController.ListFollowers)
 }

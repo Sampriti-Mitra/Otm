@@ -35,7 +35,7 @@ func (l aboutProcessor) Get(ctx *gin.Context, requestId int) (dtos.AboutResponse
 	return response, err
 }
 
-func (l aboutProcessor) Update(ctx *gin.Context, request dtos.AboutRequest, videoId int) (dtos.AboutResponse, error) {
+func (l aboutProcessor) Update(ctx *gin.Context, request dtos.AboutRequest, userId int) (dtos.AboutResponse, error) {
 	var about dtos.About
 	var response dtos.AboutResponse
 	repo := repository.GetAboutRepo()
@@ -43,7 +43,7 @@ func (l aboutProcessor) Update(ctx *gin.Context, request dtos.AboutRequest, vide
 		"about": request.About,
 	}
 	err := repo.Update(ctx, &about, attributes, map[string]interface{}{
-		"user_id": videoId,
+		"user_id": userId,
 	})
 	l.ResponseMapper(about, &response)
 	if err != nil {
