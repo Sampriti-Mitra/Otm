@@ -38,7 +38,7 @@ func (l profileProcessor) Get(ctx *gin.Context, videoId int) (dtos.UploadRespons
 	var response dtos.UploadResponse
 	repo := repository.GetProfileRepo()
 	err := repo.Find(ctx, &response, map[string]interface{}{
-		"id":         videoId,
+		"id": videoId,
 	})
 	return response, err
 }
@@ -93,43 +93,43 @@ func (l profileProcessor) Applaud(ctx *gin.Context, requestedBy string, videoId 
 	var modelResp dtos.UploadResponse
 	repo := repository.GetProfileRepo()
 
-	respCurrent,err:=l.Get(ctx,videoId)
+	respCurrent, err := l.Get(ctx, videoId)
 	if err != nil {
 		return response, err
 	}
 
-	err=json.Unmarshal(respCurrent.ApplaudedBy,&applaudedBy)
-	if err != nil &&respCurrent.ApplaudedBy!=nil {
+	err = json.Unmarshal(respCurrent.ApplaudedBy, &applaudedBy)
+	if err != nil && respCurrent.ApplaudedBy != nil {
 		return response, err
 	}
 
-	if respCurrent.ApplaudedBy==nil || !utils.Contains(applaudedBy,requestedBy){
-		applaudedBy=append(applaudedBy,requestedBy)
-		applauses=respCurrent.Applause+1
-		like="applauded"
-	}else {
-		applaudedBy=utils.Remove(applaudedBy,requestedBy)
-		applauses=respCurrent.Applause-1
-		like="applaud removed"
+	if respCurrent.ApplaudedBy == nil || !utils.Contains(applaudedBy, requestedBy) {
+		applaudedBy = append(applaudedBy, requestedBy)
+		applauses = respCurrent.Applause + 1
+		like = "applauded"
+	} else {
+		applaudedBy = utils.Remove(applaudedBy, requestedBy)
+		applauses = respCurrent.Applause - 1
+		like = "applaud removed"
 	}
 
-	applaudedJson,err:=json.Marshal(applaudedBy)
+	applaudedJson, err := json.Marshal(applaudedBy)
 
 	attributes := map[string]interface{}{
 		"applauded_by": applaudedJson,
-		"applause":  applauses,
+		"applause":     applauses,
 	}
 	err = repo.Update(ctx, &modelResp, attributes, map[string]interface{}{
 		"id": videoId,
 	})
-	if err!=nil{
-		response.Success=false
-		response.Message="Applauding failed"
-		response.Model=modelResp.Model
-	}else{
-		response.Success=true
-		response.Message=like
-		response.Model=modelResp.Model
+	if err != nil {
+		response.Success = false
+		response.Message = "Applauding failed"
+		response.Model = modelResp.Model
+	} else {
+		response.Success = true
+		response.Message = like
+		response.Model = modelResp.Model
 	}
 
 	return response, err
