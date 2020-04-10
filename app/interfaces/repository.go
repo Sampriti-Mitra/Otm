@@ -23,3 +23,7 @@ type ILoginRepo interface {
 type IProfileRepo interface {
 	IBase
 }
+
+type IFollowerRepo interface {
+	IBase
+}
