@@ -3,7 +3,6 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"otm/app/constants"
 	"otm/app/dtos"
 	"otm/app/services/internals"
 )
@@ -101,23 +100,6 @@ func (controller followerController) RejectFollowers(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, createNSResp)
-	return
-}
-
-func (controller followerController) DeleteRegister(ctx *gin.Context) {
-	RegistrationId := ctx.Param(constants.RegistrationId)
-
-	iError := LoginInstance().Delete(ctx, RegistrationId)
-	if iError.Error != nil {
-		controller.setErrorResponse(ctx, iError.Error)
-		return
-	}
-
-	var response dtos.DeletedResponse
-	response.Id = RegistrationId
-	response.Success = true
-
-	ctx.JSON(http.StatusOK, response)
 	return
 }
 

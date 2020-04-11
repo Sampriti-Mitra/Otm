@@ -122,4 +122,6 @@ func registerPublicRoutes(router *gin.RouterGroup) {
 	router.GET("profile/:profile_id/followers/:request_by", controllers.FollowerController.GetFollower)
 	router.PUT("profile/:profile_id/followers/:request_by/accept", controllers.FollowerController.AcceptFollowers)
 	router.PUT("profile/:profile_id/followers/:request_by/reject", controllers.FollowerController.RejectFollowers)
+
+	router.GET("profile/:profile_id/feed", controllers.FeedController.Feed)
 }
