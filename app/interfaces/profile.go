@@ -9,6 +9,7 @@ type IProfile interface {
 	Create(ctx *gin.Context, request dtos.UploadRequest) (dtos.UploadResponse, error)
 	List(ctx *gin.Context, requestId int) ([]dtos.UploadResponse, error)
 	ListFeed(ctx *gin.Context, requestId int) ([]dtos.UploadResponse, error)
+	ListTrending(ctx *gin.Context) ([]dtos.UploadResponse, error)
 	Get(ctx *gin.Context, videoId int) (dtos.UploadResponse, error)
 	Update(ctx *gin.Context, request dtos.UploadRequest, registrationId int) (dtos.UploadResponse, error)
 	Delete(ctx *gin.Context, requestId string) dtos.DeletedResponse

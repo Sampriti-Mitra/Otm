@@ -68,7 +68,17 @@ func (repo Base) Find(ctx *gin.Context, model interface{}, condition map[string]
 
 // Find finds all models based on given conditions
 func (repo Base) FindAll(ctx *gin.Context, model interface{}, condition map[string]interface{}) error {
-	err := repo.GetDbInstance(ctx).Where(condition).Order("created_at").Find(model).Error
+	err := repo.GetDbInstance(ctx).Where(condition).Order("created_at desc").Find(model).Error
+
+	return getErrorResponse(ctx, err, map[string]interface{}{
+		"table":     utils.GetTypeName(model),
+		"entity":    model,
+		"condition": condition,
+	})
+}
+
+func (repo Base) FindTrending(ctx *gin.Context, model interface{}, condition map[string]interface{}) error {
+	err := repo.GetDbInstance(ctx).Where(condition).Order("applause desc").Find(model).Error
 
 	return getErrorResponse(ctx, err, map[string]interface{}{
 		"table":     utils.GetTypeName(model),
