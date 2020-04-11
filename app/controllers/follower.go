@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"errors"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"otm/app/constants"
@@ -59,17 +58,25 @@ func (controller followerController) ListFollowers(ctx *gin.Context) {
 	return
 }
 
-func (controller followerController) AcceptOrRejectFollowers(ctx *gin.Context) {
-	registerRequest := dtos.RegisterRequest{}
-	RegistrationId := ctx.Param(constants.RegistrationId)
+func (controller followerController) AcceptFollowers(ctx *gin.Context) {
+	profileId := ctx.Param("profile_id")
+	request_by := ctx.Param("request_by")
 
-	iError := controller.deserialize(ctx, &registerRequest)
+	createNSResp, iError := FollowerInstance().UpdateAccept(ctx, profileId, request_by)
 	if iError != nil {
 		controller.setErrorResponse(ctx, iError)
 		return
 	}
 
-	createNSResp, iError := LoginInstance().Update(ctx, registerRequest, RegistrationId)
+	ctx.JSON(http.StatusOK, createNSResp)
+	return
+}
+
+func (controller followerController) RejectFollowers(ctx *gin.Context) {
+	profileId := ctx.Param("profile_id")
+	request_by := ctx.Param("request_by")
+
+	createNSResp, iError := FollowerInstance().UpdateReject(ctx, profileId, request_by)
 	if iError != nil {
 		controller.setErrorResponse(ctx, iError)
 		return
@@ -96,25 +103,15 @@ func (controller followerController) DeleteRegister(ctx *gin.Context) {
 	return
 }
 
-func (controller followerController) GetLogin(ctx *gin.Context) {
-	registerRequest := dtos.LoginRequest{}
+func (controller followerController) GetFollower(ctx *gin.Context) {
+	profileId := ctx.Param("profile_id")
+	request_by := ctx.Param("request_by")
 
-	iError := controller.deserialize(ctx, &registerRequest)
+	resp, iError := FollowerInstance().Get(ctx, profileId, request_by)
 	if iError != nil {
 		controller.setErrorResponse(ctx, iError)
 		return
 	}
-
-	resp, iError := LoginInstance().GetByUsername(ctx, registerRequest.Username)
-	if iError != nil {
-		controller.setErrorResponse(ctx, iError)
-		return
-	}
-	if registerRequest.Password == resp.Password {
-		ctx.JSON(http.StatusOK, resp)
-		return
-	}
-	iError = errors.New("Password invalid")
-	controller.setErrorResponse(ctx, iError)
+	ctx.JSON(http.StatusOK, resp)
 	return
 }
