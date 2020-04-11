@@ -34,6 +34,15 @@ func (l profileProcessor) List(ctx *gin.Context, requestId int) ([]dtos.UploadRe
 	return response, err
 }
 
+func (l profileProcessor) ListFeed(ctx *gin.Context, requestId int) ([]dtos.UploadResponse, error) {
+	var response []dtos.UploadResponse
+	repo := repository.GetProfileRepo()
+	err := repo.FindAll(ctx, &response, map[string]interface{}{
+		"created_by": fmt.Sprintf("%d", requestId),
+	})
+	return response, err
+}
+
 func (l profileProcessor) Get(ctx *gin.Context, videoId int) (dtos.UploadResponse, error) {
 	var response dtos.UploadResponse
 	repo := repository.GetProfileRepo()
