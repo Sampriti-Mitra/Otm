@@ -24,12 +24,12 @@ func (l aboutProcessor) Create(ctx *gin.Context, request dtos.AboutRequest) (dto
 	return response, nil
 }
 
-func (l aboutProcessor) Get(ctx *gin.Context, requestId int) (dtos.AboutResponse, error) {
+func (l aboutProcessor) Get(ctx *gin.Context, userId int) (dtos.AboutResponse, error) {
 	var about dtos.About
 	var response dtos.AboutResponse
 	repo := repository.GetAboutRepo()
 	err := repo.Find(ctx, &about, map[string]interface{}{
-		"user_id": requestId,
+		"user_id": userId,
 	})
 	l.ResponseMapper(about, &response)
 	return response, err
@@ -41,6 +41,25 @@ func (l aboutProcessor) Update(ctx *gin.Context, request dtos.AboutRequest, user
 	repo := repository.GetAboutRepo()
 	attributes := map[string]interface{}{
 		"about": request.About,
+	}
+	err := repo.Update(ctx, &about, attributes, map[string]interface{}{
+		"user_id": userId,
+	})
+	l.ResponseMapper(about, &response)
+	if err != nil {
+		return response, err
+	}
+	response.Success = true
+	return response, nil
+}
+
+func (l aboutProcessor) UpdateFollows(ctx *gin.Context, request dtos.AboutRequest, userId int) (dtos.AboutResponse, error) {
+	var about dtos.About
+	var response dtos.AboutResponse
+	repo := repository.GetAboutRepo()
+	attributes := map[string]interface{}{
+		"followers": request.Followers,
+		"following": request.Following,
 	}
 	err := repo.Update(ctx, &about, attributes, map[string]interface{}{
 		"user_id": userId,
@@ -78,4 +97,6 @@ func (l aboutProcessor) ResponseMapper(request dtos.About, response *dtos.AboutR
 	response.UserId = request.UserId
 	response.About = request.About
 	response.Model = request.Model
+	response.Following = request.Following
+	response.Followers = request.Followers
 }
