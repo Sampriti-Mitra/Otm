@@ -50,11 +50,29 @@ func (controller followerController) ListFollowers(ctx *gin.Context) {
 		controller.setErrorResponse(ctx, iError)
 		return
 	}
-	var resp []dtos.FollowResponse
-	for _, val := range response {
-		resp = append(resp, val)
+	ctx.JSON(http.StatusOK, response)
+	return
+}
+
+func (controller followerController) ListFollowerRequest(ctx *gin.Context) {
+	profileId := ctx.Param("profile_id")
+	response, iError := FollowerInstance().ListFollowerRequest(ctx, profileId)
+	if iError != nil {
+		controller.setErrorResponse(ctx, iError)
+		return
 	}
-	ctx.JSON(http.StatusOK, resp)
+	ctx.JSON(http.StatusOK, response)
+	return
+}
+
+func (controller followerController) ListFollowing(ctx *gin.Context) {
+	profileId := ctx.Param("profile_id")
+	response, iError := FollowerInstance().ListFollowing(ctx, profileId)
+	if iError != nil {
+		controller.setErrorResponse(ctx, iError)
+		return
+	}
+	ctx.JSON(http.StatusOK, response)
 	return
 }
 

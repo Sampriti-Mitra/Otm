@@ -32,6 +32,27 @@ func (l followerProcessor) List(ctx *gin.Context, userId string) ([]dtos.FollowR
 	repo := repository.GetFollowerRepo()
 	err := repo.FindAll(ctx, &response, map[string]interface{}{
 		"request_to": userId,
+		"status":     "accept",
+	})
+	return response, err
+}
+
+func (l followerProcessor) ListFollowerRequest(ctx *gin.Context, userId string) ([]dtos.FollowResponse, error) {
+	var response []dtos.FollowResponse
+	repo := repository.GetFollowerRepo()
+	err := repo.FindAll(ctx, &response, map[string]interface{}{
+		"request_to": userId,
+		"status":     "pending",
+	})
+	return response, err
+}
+
+func (l followerProcessor) ListFollowing(ctx *gin.Context, userId string) ([]dtos.FollowResponse, error) {
+	var response []dtos.FollowResponse
+	repo := repository.GetFollowerRepo()
+	err := repo.FindAll(ctx, &response, map[string]interface{}{
+		"request_by": userId,
+		"status":     "accept",
 	})
 	return response, err
 }
