@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"otm/app/dtos"
+	"otm/app/services/internals"
 	"sort"
 )
 
@@ -44,5 +45,15 @@ func (controller feedController) Feed(ctx *gin.Context) {
 		return FeedResponse[i].CreatedAt.After(FeedResponse[j].CreatedAt)
 	})
 	ctx.JSON(http.StatusOK, FeedResponse)
+	return
+}
+
+func (controller feedController) FeedTrending(ctx *gin.Context) {
+	response, iError := internals.GetProfileProcessor().ListTrending(ctx)
+	if iError != nil {
+		controller.setErrorResponse(ctx, iError)
+		return
+	}
+	ctx.JSON(http.StatusOK, response)
 	return
 }

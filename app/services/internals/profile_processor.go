@@ -43,6 +43,13 @@ func (l profileProcessor) ListFeed(ctx *gin.Context, requestId int) ([]dtos.Uplo
 	return response, err
 }
 
+func (l profileProcessor) ListTrending(ctx *gin.Context) ([]dtos.UploadResponse, error) {
+	var response []dtos.UploadResponse
+	repo := repository.GetProfileRepo()
+	err := repo.FindTrending(ctx, &response, nil)
+	return response, err
+}
+
 func (l profileProcessor) Get(ctx *gin.Context, videoId int) (dtos.UploadResponse, error) {
 	var response dtos.UploadResponse
 	repo := repository.GetProfileRepo()
