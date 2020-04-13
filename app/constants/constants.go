@@ -22,12 +22,6 @@ const (
 	// DB: key to hold the database instance
 	DB = "database"
 
-	// Logger: holds entry in context
-	LOGGER = "logger"
-
-	// ExternalRequestID: holds the unique external request identifier
-	ExternalRequestID = "external_request_id"
-
 	// TaskID: is the key to hold the task id of the process
 	TaskID = "task_id"
 
@@ -47,15 +41,16 @@ const (
 	Context = "context"
 
 	// TaskID: is the key to hold the task id of the process
-	X_RAZORPAY_TASK_ID = "X-Razorpay-TaskId"
 
 	TestData = "TestData"
 
 	MaxRecursionAllowed = 6
 
-	RazorXClient = "RAZORX"
+	MigrationDir = "dir"
 
-	RazorXVariantOn = "on"
+	DefaultMigrationDir = "migrations"
+
+	TASK_ID = "TaskId"
 )
 const (
 	Config = "config"
