@@ -38,7 +38,7 @@ func getRequestDetails(ctx *gin.Context) map[string]interface{} {
 }
 
 func getTaskId(ctx *gin.Context) string {
-	taskId := ctx.Request.Header.Get(constants.X_RAZORPAY_TASK_ID)
+	taskId := ctx.Request.Header.Get(constants.TASK_ID)
 
 	if len(taskId) == 0 {
 		taskId = generateUUID()
