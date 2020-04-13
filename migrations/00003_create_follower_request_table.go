@@ -15,7 +15,7 @@ func Up00003(tx *sql.Tx) error {
 			id int not null auto_increment,
 			request_by varchar(100),
 			request_to varchar(100),
-			status varchar(20),
+			status varchar(20) default 'pending',
 		    created_at timestamp NULL DEFAULT NULL,
             updated_at timestamp NULL DEFAULT NULL,
             deleted_at timestamp NULL DEFAULT NULL,

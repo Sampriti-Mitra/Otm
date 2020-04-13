@@ -52,7 +52,7 @@ func (l loginProcessor) Get(ctx *gin.Context, requestId int) (dtos.RegisterRespo
 	var users dtos.Users
 	repo := repository.GetLoginRepo()
 	err := repo.Find(ctx, &users, map[string]interface{}{
-		"created_by": requestId,
+		"id": requestId,
 	})
 	response.Username = users.Username
 	response.Model = users.Model

@@ -77,6 +77,17 @@ func (l followerProcessor) Get(ctx *gin.Context, userId string, requestBy string
 	return response, err
 }
 
+func (l followerProcessor) GetAccepted(ctx *gin.Context, userId string, requestBy string) (dtos.FollowResponse, error) {
+	var response dtos.FollowResponse
+	repo := repository.GetFollowerRepo()
+	err := repo.Find(ctx, &response, map[string]interface{}{
+		"request_to": userId,
+		"request_by": requestBy,
+		"status":"accept",
+	})
+	return response, err
+}
+
 func (l followerProcessor) UpdateAccept(ctx *gin.Context, profileId string, request_by string) (dtos.FollowResponse, error) {
 	var response dtos.FollowResponse
 	repo := repository.GetFollowerRepo()

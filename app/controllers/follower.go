@@ -107,7 +107,7 @@ func (controller followerController) GetFollower(ctx *gin.Context) {
 	profileId := ctx.Param("profile_id")
 	request_by := ctx.Param("request_by")
 
-	resp, iError := FollowerInstance().Get(ctx, profileId, request_by)
+	resp, iError := FollowerInstance().GetAccepted(ctx, profileId, request_by)
 	if iError != nil {
 		controller.setErrorResponse(ctx, iError)
 		return

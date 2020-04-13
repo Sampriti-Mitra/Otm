@@ -111,7 +111,7 @@ func registerPublicRoutes(router *gin.RouterGroup) {
 	router.DELETE("post/:video_id", controllers.ProfileController.DeletePost)
 	router.PUT("post/:video_id/applause", controllers.ProfileController.ApplausePost)
 
-	router.POST("about", controllers.AboutController.CreateAbout)
+	//router.POST("about", controllers.AboutController.CreateAbout)
 	router.GET("about/:user_id", controllers.AboutController.GetAbout)
 	router.PUT("about/:user_id", controllers.AboutController.UpdateAbout)
 
@@ -125,4 +125,9 @@ func registerPublicRoutes(router *gin.RouterGroup) {
 
 	router.GET("profile/:profile_id/feed", controllers.FeedController.Feed)
 	router.GET("profile/:profile_id/trending", controllers.FeedController.FeedTrending)
+
+	router.POST("collab", controllers.CollabController.CreateCollab)
+	//router.GET("collab/:collab_id", controllers.AboutController.GetCollab)
+	//router.PUT("collab/:collab_id", controllers.AboutController.UpdateCollab)
+	//router.DELETE("collab/:collab_id", controllers.AboutController.DeleteCollab)
 }
