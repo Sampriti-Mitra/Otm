@@ -28,3 +28,7 @@ type IProfileRepo interface {
 type IFollowerRepo interface {
 	IBase
 }
+
+type ICollabRepo interface {
+	IBase
+}

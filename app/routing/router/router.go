@@ -127,7 +127,9 @@ func registerPublicRoutes(router *gin.RouterGroup) {
 	router.GET("profile/:profile_id/trending", controllers.FeedController.FeedTrending)
 
 	router.POST("collab", controllers.CollabController.CreateCollab)
-	//router.GET("collab/:collab_id", controllers.AboutController.GetCollab)
+	router.PUT("collab/:collab_id/accept/:username", controllers.CollabController.AcceptCollab)
+	router.PUT("collab/:collab_id/reject/:username", controllers.CollabController.RejectCollab)
+	router.GET("collab/:collab_id", controllers.CollabController.GetCollab)
 	//router.PUT("collab/:collab_id", controllers.AboutController.UpdateCollab)
 	//router.DELETE("collab/:collab_id", controllers.AboutController.DeleteCollab)
 }
