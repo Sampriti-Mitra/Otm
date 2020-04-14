@@ -83,7 +83,7 @@ func (l followerProcessor) GetAccepted(ctx *gin.Context, userId string, requestB
 	err := repo.Find(ctx, &response, map[string]interface{}{
 		"request_to": userId,
 		"request_by": requestBy,
-		"status":"accept",
+		"status":     "accept",
 	})
 	return response, err
 }
